@@ -1,0 +1,91 @@
+#{extends 'standardForm.html' /}
+#{set title:'Dnevna stanje racuna' /}
+
+#{set 'prikazani'}
+	idZaPrikaz
+	#{/set}
+	
+<script>
+
+
+function GetURLParameter(sParam)
+	{
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++)
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam)
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	}
+	
+function nextform(id)
+{
+	$(location).attr('href','/AnalitikeIzvoda/nextMehanizam?id='+id);
+}
+/*
+$(document).ready(function(){
+	var zaPrikazivanjeStoTreba = 0;
+	//alert(GetURLParameter('id'));
+	//zaPrikazivanjeStoTreba = GetURLParameter('id');
+	//alert(zaPrikazivanjeStoTreba)
+	$("#drzavaPickup").click(function(){
+		id = $(".highlighted").find(".racun_id").html();
+		$("select").val(id);
+		$('#drzaveModal').modal('toggle');
+	});
+});
+*/
+
+
+</script>	
+	
+	
+<p>
+<ul>
+  <li><a href="@{DnevnaStanjaRacuna.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a  id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a  id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a  id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a  id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="#" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+<div class = "container-fluid">
+<h1>Dnevna stanja racuna</h1>
+
+<table class="TabelaForme">
+	<tr class = "header">
+	   <th>Datum</th> 
+	   <th>Prethodno Stanje</th>
+	   <th>Promet na teret</th>
+	   <th>Promet u korist</th>
+	   <th>Novo stanje</th>
+	   <th>Racun</th>
+	</tr>
+#{list items:dnevnaStanjaRacuna, as:'dnevnoStanjeRacuna'}
+	<tr #{if dnevnoStanjeRacuna.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "dsr_datum">${dnevnoStanjeRacuna.datum}</td>
+		<td class = "dsr_prethodnoStanje">${dnevnoStanjeRacuna.prethodnoStanje}</td>
+		<td class = "dsr_prometNaTeret">${dnevnoStanjeRacuna.prometNaTeret}</td>
+		<td class = "dsr_prometUKorist">${dnevnoStanjeRacuna.prometUKorist}</td>
+		<td class = "dsr_novoStanje">${dnevnoStanjeRacuna.novoStanje}</td>
+		<td value="${dnevnoStanjeRacuna.racun.id}" class = "racun">${dnevnoStanjeRacuna.racun.brojRacuna}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${dnevnoStanjeRacuna.id}</td>
+	</tr>
+#{/list}
+</table>
+
+
+
+  
+

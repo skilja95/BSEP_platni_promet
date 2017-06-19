@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nalozi xmlns="http://www.ftn.uns.ac.rs/nalog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/nalog file:/C:/Users/skilj/Desktop/sema.xsd">
+
+    
+    <nalog_za_prenos>
+        <podaci_o_duzniku>
+            <ime>Janko</ime>
+            <prezime>Jankovic</prezime>
+            <adresa>Nepoznata</adresa>
+        </podaci_o_duzniku>
+        <podaci_o_poveriocu>
+            <naziv>FTN</naziv>
+        </podaci_o_poveriocu>
+        <svrha_placanja>ddasd</svrha_placanja>
+        <podaci_o_prenosu>
+            <sifra_placanja>123</sifra_placanja>
+            <valuta>rsd</valuta>
+            <iznos>275000</iznos>
+        </podaci_o_prenosu>
+        <transfer_podaci_duznik>
+            <racun_duznika>111</racun_duznika>
+            <model>54</model>
+            <poziv_na_broj_duznika>26265-223-2323</poziv_na_broj_duznika>
+        </transfer_podaci_duznik>
+        <transfer_podaci_poverioc>
+            <racun_poverioca>999</racun_poverioca>
+            <model>87</model>
+            <poziv_na_broj_poverioca>58</poziv_na_broj_poverioca>
+        </transfer_podaci_poverioc>
+        <hitno>1</hitno>
+        <datum_valute>2017-06-05</datum_valute>
+    </nalog_za_prenos>
+	
+	
+	    <nalog_za_prenos>
+        <podaci_o_duzniku>
+            <ime>Marko</ime>
+            <prezime>Markovic</prezime>
+            <adresa>Nepoznata</adresa>
+        </podaci_o_duzniku>
+        <podaci_o_poveriocu>
+            <naziv>FTN</naziv>
+        </podaci_o_poveriocu>
+        <svrha_placanja>ddasd</svrha_placanja>
+        <podaci_o_prenosu>
+            <sifra_placanja>123</sifra_placanja>
+            <valuta>rsd</valuta>
+            <iznos>270000</iznos>
+        </podaci_o_prenosu>
+        <transfer_podaci_duznik>
+            <racun_duznika>111</racun_duznika>
+            <model>54</model>
+            <poziv_na_broj_duznika>26265-223-2323</poziv_na_broj_duznika>
+        </transfer_podaci_duznik>
+        <transfer_podaci_poverioc>
+            <racun_poverioca>999</racun_poverioca>
+            <model>87</model>
+            <poziv_na_broj_poverioca>58</poziv_na_broj_poverioca>
+        </transfer_podaci_poverioc>
+        <hitno>1</hitno>
+        <datum_valute>2017-06-05</datum_valute>
+    </nalog_za_prenos>
+</nalozi>

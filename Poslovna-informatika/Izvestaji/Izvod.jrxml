@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-06-05T01:49:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Izvod" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5d2d5d1-2b2d-4c7e-9eae-c2761099210e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Poslovna"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cG9zbG92bmEuYW5hbGl0aWthaXp2b2RhICwxNSwxNSxjY2I4ZGRiNi1hMDBkLTQ3OGYtOTY1Zi03&#xA;ZGU5NTA5OTk5NzM7cG9zbG92bmEucmFjdW4gLDM4MCwxMzEsNmQxYmUwMmEtNWJhZC00YzIyLWI3&#xA;ZTctMzk2YTliYzUwNjM4O3Bvc2xvdm5hLmtsaWplbnQgLDUzNiwxMDUsZTUzNjc5ZWUtMzE2NS00&#xA;ZDQ5LWE3YzctYjAwY2JmMDVkOTNhO3Bvc2xvdm5hLmRuZXZub3N0YW5qZXJhY3VuYSAsMjI2LDE0&#xA;NSxhNjQyZmJhNi0zMmEyLTRkMWQtOWYzYi05MjQxOWIyY2RiNzA7"/>
+	<parameter name="ID_Klijent" class="java.lang.String"/>
+	<parameter name="datumOd" class="java.sql.Timestamp"/>
+	<parameter name="datumDo" class="java.sql.Timestamp"/>
+	<queryString>
+		<![CDATA[SELECT poslovna.analitikaizvoda.`datumAnalitike`,
+	poslovna.analitikaizvoda.iznos,
+	poslovna.analitikaizvoda.`racunDuznika`,
+	poslovna.analitikaizvoda.`racunPoverioca`,
+	poslovna.racun.`brojRacuna`,
+	poslovna.klijent.ime,
+	poslovna.klijent.prezime,
+	poslovna.dnevnostanjeracuna.`novoStanje`
+FROM poslovna.analitikaizvoda
+	INNER JOIN poslovna.dnevnostanjeracuna ON 
+	 poslovna.analitikaizvoda.`dnevnoStanjeRacuna_id` = poslovna.dnevnostanjeracuna.id 
+	INNER JOIN poslovna.racun ON 
+	 poslovna.dnevnostanjeracuna.racun_id = poslovna.racun.id 
+	INNER JOIN poslovna.klijent ON 
+	 poslovna.racun.klijent_id = poslovna.klijent.id 
+WHERE 
+	 poslovna.racun.klijent_id = $P{ID_Klijent} 
+	 AND poslovna.analitikaizvoda.`datumAnalitike` BETWEEN $P{datumOd} AND $P{datumDo}]]>
+	</queryString>
+	<field name="datumAnalitike" class="java.sql.Timestamp"/>
+	<field name="iznos" class="java.lang.Double"/>
+	<field name="racunDuznika" class="java.lang.String"/>
+	<field name="racunPoverioca" class="java.lang.String"/>
+	<field name="brojRacuna" class="java.lang.String"/>
+	<field name="ime" class="java.lang.String"/>
+	<field name="prezime" class="java.lang.String"/>
+	<field name="novoStanje" class="java.lang.Double"/>
+	<variable name="datumAnalitike" class="java.sql.Date"/>
+	<group name="grupa">
+		<groupExpression><![CDATA[$F{brojRacuna}]]></groupExpression>
+		<groupHeader>
+			<band height="63">
+				<staticText>
+					<reportElement x="30" y="0" width="60" height="30" uuid="e48ea400-5529-4314-ac09-6336aea84bcb"/>
+					<text><![CDATA[Broj racuna: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="90" y="0" width="100" height="30" uuid="4ad80248-40d9-4999-a23f-c6e065486843"/>
+					<textFieldExpression><![CDATA[$F{brojRacuna}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="60" y="30" width="100" height="30" uuid="8e7f0af3-ebb9-4bff-b1c4-69531139913e"/>
+					<text><![CDATA[Racun duznika:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="160" y="30" width="100" height="30" uuid="2f353402-97aa-4044-92af-18e41ce568d1"/>
+					<text><![CDATA[Racun poverioca:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="260" y="30" width="100" height="30" uuid="58de5d59-a118-496e-8f97-c97b44ac4b5b"/>
+					<text><![CDATA[Iznos:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="360" y="30" width="100" height="30" uuid="31648038-0070-40ad-accc-b0a8441afb1e"/>
+					<text><![CDATA[Datum analitike:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="52">
+				<textField>
+					<reportElement x="110" y="8" width="100" height="30" uuid="d1a4bbba-3fde-438e-9792-5bc305bed929"/>
+					<textFieldExpression><![CDATA[$F{novoStanje}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-30" y="8" width="604" height="1" uuid="80fe8f12-31a8-4478-b1f7-3003d7ebf883"/>
+				</line>
+				<staticText>
+					<reportElement x="30" y="8" width="80" height="30" uuid="98005884-3824-4719-8b35-78cdac2a78fa"/>
+					<text><![CDATA[Trenutno stanje:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="133" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="39" height="30" uuid="59eaccab-514d-442f-b3bd-8b681037682f"/>
+				<text><![CDATA[Datum:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="40" y="0" width="100" height="30" uuid="df276609-b721-4aec-9067-1dad50d118a4"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="0" width="30" height="30" uuid="a1d0dee6-c203-425b-89e6-0b74c29f405a"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="496" y="0" width="34" height="30" uuid="04f6a3fd-8854-47c6-8511-78af6b5640b0"/>
+				<text><![CDATA[Strana:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="40" width="200" height="40" uuid="ba877cd3-5f9a-46d0-bf41-9de7ab1ebd5c"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Izvod klijenta]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="100" width="100" height="30" uuid="e9326b4e-926e-44b8-861a-a6eb6b5f37e8"/>
+				<textFieldExpression><![CDATA[$F{ime}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="70" height="30" uuid="ec2189a2-a94f-4955-8ef8-c9b8f60a75a4"/>
+				<text><![CDATA[Ime klijenta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="100" width="79" height="30" uuid="5ded54d1-113a-46bb-a93b-a8cb2ad22723"/>
+				<text><![CDATA[Prezime klijenta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="100" width="100" height="30" uuid="be54e1cc-815e-4b97-ad47-7cb00607c458"/>
+				<textFieldExpression><![CDATA[$F{prezime}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-20" y="130" width="595" height="1" uuid="34a72cef-858d-4547-a452-58b1f0aea23c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="60" y="0" width="100" height="30" uuid="efcd3e8e-77a0-4ce5-9668-67039cac5944"/>
+				<textFieldExpression><![CDATA[$F{racunDuznika}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="0" width="100" height="30" uuid="c2b7d582-6612-4756-bbcf-9dfbb0764951"/>
+				<textFieldExpression><![CDATA[$F{racunPoverioca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="0" width="100" height="30" uuid="a3300f5b-e250-4cb4-a5e0-a30ce37ca2d9"/>
+				<textFieldExpression><![CDATA[$F{iznos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="0" width="100" height="30" uuid="8649afe5-12a0-4da4-8712-e41ab95c5d99"/>
+				<textFieldExpression><![CDATA[$F{datumAnalitike}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

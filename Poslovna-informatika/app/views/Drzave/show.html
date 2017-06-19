@@ -1,0 +1,123 @@
+#{extends 'standardForm.html' /}
+#{set title:'Države' /}
+
+<script>
+
+function sync(item){
+	oznaka = item.find(".oznaka").html()
+    naziv = item.find(".naziv").html()
+    id = item.find(".id").html()
+    $("#drzava_oznaka").val(oznaka);
+    $("#drzava_naziv").val(naziv);
+    $("#drzava_id").val(id);
+}
+
+function remove(id)
+{
+	var answer = confirm("Are you sure you want to delete?");
+	if(answer)
+		{
+			$(location).attr('href','/Drzave/delete?id='+id);
+		}
+	else
+		{
+		
+		}
+	
+}
+
+function nextform(id)
+{
+	$(location).attr('href','/NaseljenaMesta/nextMehanizam?id='+id);
+}
+
+</script>
+
+
+
+<p>
+<ul>
+  <li><a href="@{Drzave.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="@{Drzave.show("edit",null)}" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{Drzave.show("add",null)}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+
+
+
+<h1>Države</h1>
+
+<table class="TabelaForme">
+	<tr class = "header">
+	   <th>Oznaka</th> 
+	   <th>Naziv</th>
+	</tr>
+#{list items:drzave, as:'drzava'}
+	<tr #{if drzava.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "oznaka">${drzava.oznaka}</td>
+		<td class = "naziv">${drzava.naziv}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${drzava.id}</td>
+	</tr>
+#{/list}
+</table>
+
+<div class = "panel">
+	<p>
+	
+		#{set 'action'}
+		  #{if mode == 'add'}
+		    @{Drzave.create()}
+		  #{/if}
+		  #{elseif mode == 'edit'}
+		    @{Drzave.edit()}
+		  #{/elseif}
+		  #{else}
+		    @{Drzave.filter()}
+		  #{/else}
+		#{/set}
+		
+					#{ifErrors}
+					   <h4>Oops�</h4>
+					   <h6>Greska pri unosu</h6>
+					   <br>
+					#{/ifErrors}
+		
+		
+		<form action=${action} method="post">
+		
+				#{field 'drzava.id'}
+					<input type = "hidden" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				
+				<p>
+				#{field 'drzava.oznaka'}
+					<label for = "${field.id}">Oznaka</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+					<span class="error">#{error field.name /}</span>
+				#{/}
+				</p>
+				<p>
+				#{field 'drzava.naziv'}
+					<label for = "${field.id}">Naziv</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+					<span>#{error field.name /}</span>
+				#{/}
+				</p>
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "#" style="margin-left:1em">Rollback</a>
+				</div>			
+				
+		</form>
+	</p>
+</div>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<medjubankarski_prenosi>
+    <detalji_prenosa>
+        <poruka>MT103</poruka>
+        <datum>2017/06/15</datum>
+        <iznos>270000</iznos>
+    </detalji_prenosa>
+    <banka_posiljalac>
+        <naziv>KOMBANK</naziv>
+        <sifra>21</sifra>
+        <swift_kod>231</swift_kod>
+        <obracunski_racun>4324234234</obracunski_racun>
+    </banka_posiljalac>
+    <banka_primalac>
+        <naziv>INTESA</naziv>
+        <sifra>32</sifra>
+        <swift_kod>53</swift_kod>
+        <obracunski_racun>4234234</obracunski_racun>
+    </banka_primalac>
+</medjubankarski_prenosi>

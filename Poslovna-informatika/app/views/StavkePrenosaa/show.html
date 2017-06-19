@@ -1,0 +1,79 @@
+#{extends 'standardForm.html' /}
+#{set title:'Stavke prenosa' /}
+
+#{set 'prikazani'}
+	idZaPrikaz
+	#{/set}
+	
+<script>
+
+
+function GetURLParameter(sParam)
+	{
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++)
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam)
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	}
+/*
+$(document).ready(function(){
+	var zaPrikazivanjeStoTreba = 0;
+	//alert(GetURLParameter('id'));
+	//zaPrikazivanjeStoTreba = GetURLParameter('id');
+	//alert(zaPrikazivanjeStoTreba)
+	$("#drzavaPickup").click(function(){
+		id = $(".highlighted").find(".racun_id").html();
+		$("select").val(id);
+		$('#drzaveModal').modal('toggle');
+	});
+});
+*/
+
+</script>	
+	
+	
+<p>
+<ul>
+  <li><a href="@{StavkePrenosaa.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="@{StavkePrenosaa.show("edit",null)}" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a  id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a  id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a  id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a  id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{StavkePrenosaa.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+<div class = "container-fluid">
+<h1>Stavke prenosa</h1>
+
+<table class="TabelaForme">
+	<tr class = "header">
+	   <th>Analitika izvoda</th> 
+	   <th>Medjubankarski prenos</th>
+	</tr>
+	
+#{list items:stavkePrenosaList, as:'stavkaPrenosa'}
+	<tr #{if stavkaPrenosa.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td value="${stavkaPrenosa.analitikaIzvoda.id}" class = "analitikaIzvoda">${stavkaPrenosa.analitikaIzvoda.id}</td>
+		<td value="${stavkaPrenosa.medjubankarskiPrenos.id}" class = "medjubankarskiPrenos">${stavkaPrenosa.medjubankarskiPrenos.id}</td>
+		
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${stavkaPrenosa.id}</td>
+	</tr>
+#{/list}
+</table>
+
+
+
+  
+

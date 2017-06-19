@@ -1,0 +1,420 @@
+#{extends 'standardForm.html' /}
+#{set title:'Racuni' /}
+
+#{set 'prikazani'}
+	idZaPrikaz
+	#{/set}
+
+<script>
+
+
+function GetURLParameter(sParam)
+	{
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++)
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam)
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	}
+
+function nextform1(id)
+{
+	$(location).attr('href','/DnevnaStanjaRacuna/nextMehanizam?id='+id+'&sta=rac');
+}
+	
+function nextform2(id)
+{
+	$(location).attr('href','/ZatvaranjaRacuna/nextMehanizam?id='+id+'&sta=rac');
+}
+
+
+$(document).ready(function(){
+	var zaPrikazivanjeStoTreba = 0;
+	//alert(GetURLParameter('id'));
+	//zaPrikazivanjeStoTreba = GetURLParameter('id');
+	//alert(zaPrikazivanjeStoTreba)
+	$("#klijentPickup").click(function(){
+		id = $(".highlighted").find(".klij_id").html();
+		$("select").val(id);
+		$('#klijentModal').modal('toggle');
+	});
+	$("#nextform1").click(function()
+			{
+				console.log("DOSLO 1");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform1(id);
+			});
+	$("#nextform2").click(function()
+			{
+				console.log("DOSLO 2");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform2(id);
+			});
+	
+	/*
+	$("#bankaPickup").click(function(){
+		id = $(".highlighted").find(".bank_id").html();
+		$("select").val(id);
+		$('#bankaModal').modal('toggle');
+	});
+	*/
+	$("#valutaPickup").click(function(){
+		id = $(".highlighted").find(".val_id").html();
+		$("select").val(id);
+		$('#valutaModal').modal('toggle');
+	});
+	
+});
+
+function dajVrijeme(xx)
+{
+	var niz_datuma=xx.split("-");
+    godina=niz_datuma[0];
+    mjesec = niz_datuma[1];
+    
+    niz_dana = niz_datuma[2].split(" ");
+    dan = niz_dana[0];
+    
+    totalan_datum = godina +"-"+mjesec+"-"+dan;
+    console.log(totalan_datum);
+    return totalan_datum;
+}
+
+function sync(item){
+	
+	//broj racuna, status, datumOtvaranja, datumZatvaranja, Klijent, Banka
+	brojRacuna = item.find(".r_brojRacuna").html()
+    status = item.find(".r_status").html()
+	datumOtvaranja = item.find(".r_datumOtvaranja").html()
+    datumZatvaranja = item.find(".r_datumzatvaranja").html()
+    klijentVal = item.find(".r_klijent").attr("value");
+ //   bankaVal = item.find(".r_banka").attr("value");
+    valutaVal = item.find(".r_valuta").attr("value");
+    id = item.find(".id").html()
+    
+    
+    
+    $("#racun_brojRacuna").val(brojRacuna);
+    if(status == "true")
+	 	$("#racun_status").prop('checked', true); //check
+	 else 
+		$("#racun_status").prop('checked', false); //uncheck
+		
+    $("#racun_datumOtvaranja").val(dajVrijeme(datumOtvaranja));
+	if(datumZatvaranja!="")
+		{
+    //$("#racun_datumZatvaranja").val(dajVrijeme(datumZatvaranja));
+		}
+    $("#racun_id").val(id);
+    
+  //  $("#banka").val(bankaVal);
+    $("#klijent").val(klijentVal);
+    $("#valuta").val(valutaVal);
+}
+
+function remove(id)
+{
+	var answer = confirm("Are you sure you want to delete?");
+	if(answer)
+		{
+			$(location).attr('href','/Racuni/delete?id='+id);
+		}
+	else
+		{
+		
+		}
+	
+	
+}
+
+</script>
+
+<p>
+<ul>
+  <li><a href="@{Racuni.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="@{Racuni.show("edit",null)}" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a  id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a  id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a  id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a  id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{Racuni.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1">DSR<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2">ZR<img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+<div class = "container-fluid">
+<h1>Racuni</h1>
+
+<table class="TabelaForme">
+	<tr class = "header">
+	   <th>Broj racuna</th> 
+	   <th>Status</th>
+	   <th>Datum otvaranja</th> 
+	   <th>Datum zatvaranja</th>
+	   <th>Klijent JMBG</th>
+	 <!--   <th>Banka</th> -->
+	   <th>Valuta</th>
+	</tr>
+#{list items:racuni, as:'racun'}
+	<tr #{if racun.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "r_brojRacuna">${racun.brojRacuna}</td>
+		<td class = "r_status">${racun.status}</td>
+		<td class = "r_datumOtvaranja">${racun.datumOtvaranja}</td>
+		<td class = "r_datumZatvaranja">${racun.datumZatvaranja}</td>
+		<td value="${racun.klijent.id}" class = "r_klijent">${racun.klijent.jmbg}</td>
+	 <!--	<td value="${racun.banka.id}" class = "r_banka">${racun.banka.nazivBanke}</td> -->
+		<td value="${racun.valuta.id}" class = "r_valuta">${racun.valuta.naziv}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${racun.id}</td>
+	</tr>
+#{/list}
+</table>
+
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{Racuni.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{Racuni.edit()}
+    #{/elseif}
+    #{else}
+       @{Racuni.filter()}
+    #{/else}
+  #{/set}
+  
+					#{ifErrors}
+					   <h4>Oops…</h4>
+					   <h6>Greska pri unosu</h6>
+					   <br>
+					#{/ifErrors}
+
+
+  
+<div class = "panel">
+	<p>
+		
+		<form action = "${action}">
+		
+				#{field 'racun.id'}
+					<input type = "hidden" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				
+				<p>
+				#{field 'racun.brojRacuna'}
+					<label for = "${field.id}">Broj racuna [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'racun.status'}
+					<label for = "${field.id}">Status</label>
+					<input type = "checkbox" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'racun.datumOtvaranja'}
+					<label for = "${field.id}">Datum otvaranja</label>
+					<input type = "date" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				
+				<p>
+				#{field 'racun.datumZatvaranja'}
+					<label for = "${field.id}">Datum zatvaranja</label>
+					<input type = "date" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent'}
+					<label for = "${field.id}">Klijent</label>
+					<select name = "${field.name}" id = "${field.id}"/>
+					#{list items:klijenti, as:'klijent'}
+					<option value = "${klijent.id}">${klijent.jmbg}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#klijentModal">...	</button>
+					 
+					 <script>
+					 	//alert(zaPrikazivanjeStoTreba);
+					 	//document.getElementById('${field.id}').selectedIndex=zaPrikazivanjeStoTreba;
+					 	document.getElementById('${field.id}').selectedIndex=GetURLParameter('id')-1;
+					 </script>
+				#{/}
+				</p>
+				
+		<!--		 
+					<p>
+				#{field 'banka'}
+					<label for = "${field.id}">Banka</label>
+					<select name = "${field.name}" id = "${field.id}"/>
+					#{list items:banke, as:'banka'}
+					<option value = "${banka.id}">${banka.nazivBanke}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#bankaModal">...	</button>
+					 
+					 <script>
+					 	//alert(zaPrikazivanjeStoTreba);
+					 	//document.getElementById('${field.id}').selectedIndex=zaPrikazivanjeStoTreba;
+					 	document.getElementById('${field.id}').selectedIndex=GetURLParameter('id')-1;
+					 </script>
+				#{/}
+				</p>
+				-->
+				<p>
+				#{field 'valuta'}
+					<label for = "${field.id}">Valuta</label>
+					<select name = "${field.name}" id = "${field.id}"/>
+					#{list items:valute, as:'valuta'}
+					<option value = "${valuta.id}">${valuta.naziv}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#valutaModal">...	</button>
+					 
+					 <script>
+					 	//alert(zaPrikazivanjeStoTreba);
+					 	//document.getElementById('${field.id}').selectedIndex=zaPrikazivanjeStoTreba;
+					 	document.getElementById('${field.id}').selectedIndex=GetURLParameter('id')-1;
+					 </script>
+				#{/}
+				</p>
+				
+				
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "#" style="margin-left:1em">Rollback</a>
+				</div>			
+				
+		</form>
+	</p>
+</div>
+
+ <!-- Modal -->
+  <div class="modal fade" id="klijentModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content" style = "width:970px;margin-left:-200px" >
+      <div class="modal-header">
+      	Klijenti
+      </div>
+      <div class="modal-body" style = "width:970px;margin-left:-200px" >
+	    <table style = "padding:2em;width:950px;margin-left:200px">
+		<tr class = "header">
+		   <th>JMBG</th> 
+		   <th>Ime</th>
+		   <th>Prezime</th> 
+		   <th>Adresa</th>
+		   <th>Telefon</th> 
+		   <th>Email</th>
+		   <th>Pravno</th> 
+		   <th>Banka</th>
+		   <th>Naseljeno mesto</th>
+		</tr>
+		#{list items:klijenti, as:'klijent'}
+		<tr>
+			<td class = "jmbg">${klijent.jmbg}</td>
+			<td class = "ime">${klijent.ime}</td>
+			<td class = "prezime">${klijent.prezime}</td>
+			<td class = "adresa">${klijent.adresa}</td>
+			<td class = "telefon">${klijent.telefon}</td>
+			<td class = "email">${klijent.email}</td>
+			<td class = "pravno">${klijent.pravno}</td>
+			<td value="${klijent.banka.id}" class = "banka">${klijent.banka.nazivBanke}</td>
+			<td value="${klijent.naseljenoMesto.id}" class = "naseljenoMesto">${klijent.naseljenoMesto.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "klij_id">${klijent.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "klijentPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   
+   
+   
+ <!--    
+  <div class="modal fade" id="bankaModal" role="dialog">
+    <div class="modal-dialog">
+      
+      <div class="modal-content">
+      <div class="modal-header">
+      	Banke
+      </div>
+      <div class="modal-body">
+     <table style = "padding:2em">
+		<tr class = "header">
+		 	<th>Naziv</th> 
+	   		<th>Sifra</th>
+	   		<th>SWIFT kod</th>
+	   		<th>Obracunski racun</th>
+		</tr>
+		#{list items:banke, as:'banka'}
+		<tr>
+			<td class = "naziv">${banka.nazivBanke}</td>
+			<td class = "sifra">${banka.sifraBanke}</td>
+			<td class = "swiftKod">${banka.swiftKod}</td>
+			<td class = "obracunskiRacun">${banka.obracunskiRacun}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "bank_id">${banka.id}</td>
+		</tr>
+		#{/list}
+		</table> 
+
+		<div class="modal-footer">
+			<input id = "bankaPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   -->
+   
+   <!-- VALUTE MODAL -->
+    <!-- Modal -->
+  <div class="modal fade" id="valutaModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content" style = "width:970px;margin-left:-200px" >
+      <div class="modal-header">
+      	Valute
+      </div>
+      <div class="modal-body" style = "width:970px;margin-left:-200px" >
+	    <table style = "padding:2em;width:950px;margin-left:200px">
+		<tr class = "header">
+		   <th>Sifra</th> 
+		   <th>Naziv</th>
+		</tr>
+		#{list items:valute, as:'valuta'}
+		<tr>
+			<td class = "val_sifra">${valuta.sifra}</td>
+			<td class = "val_naziv">${valuta.naziv}</td>
+			
+			<td style = "visibility: hidden; max-width: 0px" class = "val_id">${valuta.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "valutaPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   
+</div>

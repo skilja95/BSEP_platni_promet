@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="MBPService" targetNamespace="http://informatika.ftn.ns.ac.yu/ws/mbp" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://informatika.ftn.ns.ac.yu/ws/mbp" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://informatika.ftn.ns.ac.yu/ws/mbp" targetNamespace="http://informatika.ftn.ns.ac.yu/ws/mbp" version="1.0">
+<xs:element name="banka_posiljalac">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="naziv" type="xs:string"/>
+<xs:element name="sifra" type="xs:string"/>
+<xs:element name="swift_kod" type="xs:string"/>
+<xs:element name="obracunski_racun" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="banka_primalac">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="naziv" type="xs:string"/>
+<xs:element name="sifra" type="xs:string"/>
+<xs:element name="swift_kod" type="xs:string"/>
+<xs:element name="obracunski_racun" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="detalji_prenosa">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="poruka" type="xs:string"/>
+<xs:element name="datum" type="xs:string"/>
+<xs:element name="iznos" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="medjubankarski_prenosi" type="tns:medjBan"/>
+<xs:complexType name="medjBan">
+<xs:sequence>
+<xs:element name="detalji_prenosa"/>
+<xs:element name="banka_posiljalac"/>
+<xs:element name="banka_primalac"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="doMbpResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="doMbp">
+    <wsdl:part name="medjBan" type="tns:medjBan">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MBP">
+    <wsdl:operation name="doMbp">
+      <wsdl:input name="doMbp" message="tns:doMbp">
+    </wsdl:input>
+      <wsdl:output name="doMbpResponse" message="tns:doMbpResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MBPServiceSoapBinding" type="tns:MBP">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="doMbp">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="doMbp">
+        <soap:body use="literal" namespace="http://informatika.ftn.ns.ac.yu/ws/mbp"/>
+      </wsdl:input>
+      <wsdl:output name="doMbpResponse">
+        <soap:body use="literal" namespace="http://informatika.ftn.ns.ac.yu/ws/mbp"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MBPService">
+    <wsdl:port name="MBPPort" binding="tns:MBPServiceSoapBinding">
+      <soap:address location="http://localhost:9090/MBPPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

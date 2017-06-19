@@ -1,0 +1,71 @@
+#{extends 'standardForm.html' /}
+#{set title:'Ucitavanje Naloga Za Prenos' /}
+
+#{set 'prikazani'}
+	idZaPrikaz
+	#{/set}
+	
+	
+<script>
+function GetURLParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
+</script>
+
+
+<div class="container-fluid">
+	<h1>Ucitavanje Naloga Za Prenos</h1>
+
+
+	#{set 'action'} 
+	#{if mode == 'obradi'}
+	@{UcitavanjeNalogaZaPrenos.obradi()} 
+	#{/if} 
+	#{/set}
+
+
+	<div class="panel">
+		<p>
+		<form action="${action}">
+		
+			
+			
+			<p>
+				
+					Naziv fajla
+					<input type = "text" name = "nazivFajla" id = "nazivFajla"/>
+				
+				</p>
+		
+			<!-- 
+			#{field 'radnik.id'} <input type="hidden" name="${field.name}"
+				id="${field.id}" /> #{/}
+
+			<p>
+				#{field 'radnik.nadimak'}
+					<label for = "${field.id}">Naziv fajla</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+			 -->
+			
+
+			<div id="formActions">
+				<input type="submit" value="Potvrda" style="margin-left: 6em" />
+			</div>
+
+		</form>
+		</p>
+	</div>
+</div>

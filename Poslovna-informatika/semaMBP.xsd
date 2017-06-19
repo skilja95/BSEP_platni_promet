@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:element name="medjubankarski_prenosi">
+        <xs:complexType>
+            <xs:sequence maxOccurs="1">
+                <xs:element ref="detalji_prenosa"/>
+                <xs:element ref="banka_posiljalac"/>
+                <xs:element ref="banka_primalac"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="banka_posiljalac">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv" type="xs:string"/>
+                <xs:element name="sifra" type="xs:string"/>
+                <xs:element name="swift_kod" type="xs:string"/>
+                <xs:element name="obracunski_racun" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="banka_primalac">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv" type="xs:string"/>
+                <xs:element name="sifra" type="xs:string"/>
+                <xs:element name="swift_kod" type="xs:string"/>
+                <xs:element name="obracunski_racun" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="detalji_prenosa">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="poruka" type="xs:string"/>
+                <xs:element name="datum" type="xs:string"/>
+                <xs:element name="iznos" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

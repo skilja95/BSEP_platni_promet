@@ -1,0 +1,146 @@
+#{extends 'standardForm.html' /}
+#{set title:'Medjubankarski prenosi' /}
+
+#{set 'prikazani'}
+	idZaPrikaz
+	#{/set}
+	
+<script>
+
+
+function GetURLParameter(sParam)
+	{
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++)
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam)
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	}
+
+
+$(document).ready(function(){
+
+});
+
+function nextform(id)
+{
+	$(location).attr('href','/StavkePrenosaa/nextMehanizam?id='+id+'&sta=mp');
+}
+
+/*
+
+$(document).on('click', '#nextformx', function(e) {
+	
+		e.preventDefault();
+		id=$(".highlighted").find(".analitikaIzvoda_ID").html();
+		$("select").val(id);
+		$('#nextModal').modal('toggle');
+		//e.preventDefault();
+		//highlighted=$(".highlighted");
+		//id = highlighted.find(".id").html();
+		//nextform(id);
+		
+	//checkIfLogged();
+	//addNewProgramSC();
+	
+});
+
+$("#klijentPickup").click(function(){
+	
+	console.log("Desilo se ovo");
+	id = $(".highlighted").find(".klij_id").html();
+	$("select").val(id);
+	$('#bankaPickup').modal('toggle');
+	window.location = "@{AnalitikeIzvoda.show("search",filter)}";
+});
+*/
+function sync(item){
+	
+
+    id = item.find(".id").html()
+    $("#racun_id").val(id);
+
+}
+
+</script>	
+	
+	
+<p>
+<ul>
+  <li><a href="#" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a  id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a  id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a  id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a  id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="#" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+<div class = "container-fluid">
+<h1>Medjubankarski Prenosi</h1>
+
+<table class="TabelaForme">
+	<tr class = "header">
+	   <th>Vrsta poruke</th> 
+	   <th>Datum</th>
+	   <th>Iznos</th>
+	   <th>Banka Posiljalac</th>
+	   <th>Banka Primalac</th>
+	</tr>
+	
+#{list items:medjubankarskiPrenosi, as:'mp'}
+	<tr #{if analitikaIzvoda.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "ai_datumAnalitike">${mp.vrstaPoruke}</td>
+		<td class = "ai_smer">${mp.datum}</td>
+		<td class = "ai_duznik">${mp.iznos}</td>
+		<td class = "ai_svrhaPlacanja">${mp.bankaPosiljalac.naziv}</td>
+		<td class = "ai_primaoc">${mp.bankaPrimalac.naziv}</td>
+		
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${mp.id}</td>
+	</tr>
+#{/list}
+</table>
+
+<!-- 
+  <div class="modal fade" id="nextModal" role="dialog">
+    <div class="modal-dialog">
+      
+      <div class="modal-content">
+      <div class="modal-header">
+      	Select where to next:
+      </div>
+      <div class="modal-body">
+     <table style = "padding:2em">
+		<tr class = "header">
+		 	<th>Naziv</th>
+		</tr>
+		<tr>
+			<td class = "naziv">Zatvaranje Racuna</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "zr"></td>
+		</tr>
+		<tr>
+			<td class = "naziv">Stavke Prenosa</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "sp"></td>
+		</tr>
+		</table> 
+
+		<div class="modal-footer">
+			<input id = "klijentPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   -->  
+  
+

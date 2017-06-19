@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="izvod_racuna">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="banka_ir"/>
+                <xs:element ref="duznik_ir"/>
+                <xs:element ref="poverilac_ir"/>
+                <xs:element ref="detalji_izvoda_racuna"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="banka_ir">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv" type="xs:string"/>
+                <xs:element name="sifra_banke" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="duznik_ir">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ime" type="xs:string"/>
+                <xs:element name="prezime" type="xs:string"/>
+                <xs:element name="broj_racuna" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="poverilac_ir">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv" type="xs:string"/>
+                <xs:element name="broj_racuna" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="detalji_izvoda_racuna">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="iznos" type="xs:string"/>
+                <xs:element name="valuta" type="xs:string"/>
+                <xs:element name="datum" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

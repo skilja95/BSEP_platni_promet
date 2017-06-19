@@ -1,0 +1,184 @@
+#{extends 'standardForm.html' /}
+#{set title:'Banke' /}
+
+<script>
+
+function sync(item){
+	obracunskiRacun = item.find(".obracunskiRacun").html()
+    swiftKod = item.find(".swiftKod").html()
+    id = item.find(".id").html()
+    nazivBanke = item.find(".nazivBanke").html()
+    sifraBanke = item.find(".sifraBanke").html()
+    
+    $("#banka_obracunskiRacun").val(obracunskiRacun);
+	$("#banka_swiftKod").val(swiftKod);
+    $("#banka_sifraBanke").val(sifraBanke);
+    $("#banka_nazivBanke").val(nazivBanke);
+    $("#banka_id").val(id);
+}
+
+$(document).ready(function(){
+	$("#nextform1").click(function()
+			{
+				console.log("DOSLO 1");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform1(id);
+			});
+	$("#nextform2").click(function()
+			{
+				console.log("DOSLO 2");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform2(id);
+			});
+	$("#nextform3").click(function()
+			{
+				console.log("DOSLO 3");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform3(id);
+			});
+});
+
+function nextform1(id)
+{
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpos');
+}
+	
+function nextform2(id)
+{
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpri');
+}
+
+function nextform3(id)
+{
+	$(location).attr('href','/Racuni/nextMehanizam?id='+id+'&sta=ban');
+}
+
+function remove(id)
+{
+	var answer = confirm("Are you sure you want to delete?");
+	if(answer)
+		{
+			$(location).attr('href','/Banke/delete?id='+id);
+		}
+	else
+		{
+		
+		}
+	
+}
+
+function nextform(id)
+{
+	//$(location).attr('href','/NaseljenaMesta/nextMehanizam?id='+id);
+}
+
+</script>
+
+
+
+<p>
+<ul>
+  <li><a href="@{Banke.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="@{Banke.show("edit",null)}" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{Banke.show("add",null)}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1">BPRI<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2">BPOS<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform3">R<img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+
+
+
+<h1>Banke</h1>
+
+<table class="TabelaForme">
+	<tr class = "header">
+	   <th>Naziv</th> 
+	   <th>Sifra</th>
+	   <th>SWIFT kod</th> 
+	   <th>Obracunski racun</th>
+	</tr>
+#{list items:banke, as:'banka'}
+	<tr #{if banka.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "nazivBanke">${banka.nazivBanke}</td>
+		<td class = "sifraBanke">${banka.sifraBanke}</td>
+		<td class = "swiftKod">${banka.swiftKod}</td>
+		<td class = "obracunskiRacun">${banka.obracunskiRacun}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${banka.id}</td>
+	</tr>
+#{/list}
+</table>
+
+<div class = "panel">
+	<p>
+	
+		#{set 'action'}
+		  #{if mode == 'add'}
+		    @{Banke.create()}
+		  #{/if}
+		  #{elseif mode == 'edit'}
+		    @{Banke.edit()}
+		  #{/elseif}
+		  #{else}
+		    @{Banke.filter()}
+		  #{/else}
+		#{/set}
+					
+					#{ifErrors}
+					   <h4>Oops…</h4>
+					   <h6>Greska pri unosu</h6>
+					   <br>
+					#{/ifErrors}
+					
+		<form action=${action} method="post">
+		
+				#{field 'banka.id'}
+					<input type = "hidden" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				
+				<p>
+				#{field 'banka.nazivBanke'}
+					<label for = "${field.id}">Naziv [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'banka.sifraBanke'}
+					<label for = "${field.id}">Sifra [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				
+				<p>
+				#{field 'banka.swiftKod'}
+					<label for = "${field.id}">SWIFT</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				
+				<p>
+				#{field 'banka.obracunskiRacun'}
+					<label for = "${field.id}">Obracunski racun</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "#" style="margin-left:1em">Rollback</a>
+				</div>			
+				
+		</form>
+	</p>
+</div>
+

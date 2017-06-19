@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/nalog" xmlns:nal="http://www.ftn.uns.ac.rs/nalog">
+
+    <xs:element name="nalozi">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:element name="nalog_za_prenos">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="podaci_o_duzniku" type="nal:TFizicko_lice"/>
+                            <xs:element name="podaci_o_poveriocu" type="nal:TPravno_lice"/>
+                            <xs:element name="svrha_placanja" type="xs:string"/>
+                            <xs:element name="podaci_o_prenosu">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="sifra_placanja" type="xs:string"/>
+                                        <xs:element name="valuta" type="xs:string"/>
+                                        <xs:element name="iznos" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="transfer_podaci_duznik">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="racun_duznika" type="xs:string"/>
+                                        <xs:element name="model" type="xs:string"/>
+                                        <xs:element name="poziv_na_broj_duznika" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="transfer_podaci_poverioc">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="racun_poverioca" type="xs:string"/>
+                                        <xs:element name="model" type="xs:string"/>
+                                        <xs:element name="poziv_na_broj_poverioca" type="xs:string"
+                                        />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="hitno" type="xs:boolean"/>
+                            <xs:element name="datum_valute" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType abstract="true" name="TLice"/>
+    <xs:complexType name="TPravno_lice">
+        <xs:complexContent>
+            <xs:extension base="nal:TLice">
+                <xs:sequence>
+                    <xs:element name="naziv" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TFizicko_lice">
+        <xs:complexContent>
+            <xs:extension base="nal:TLice">
+                <xs:sequence>
+                    <xs:element name="ime" type="xs:string"/>
+                    <xs:element name="prezime" type="xs:string"/>
+                    <xs:element name="adresa" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

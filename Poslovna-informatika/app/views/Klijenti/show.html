@@ -1,0 +1,359 @@
+#{extends 'standardForm.html' /}
+#{set title:'Klijenti' /}
+
+#{set 'prikazani'}
+	idZaPrikaz
+	#{/set}
+
+<script>
+
+function GetURLParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
+$(document).ready(function(){
+	var zaPrikazivanjeStoTreba = 0;
+	//alert(GetURLParameter('id'));
+	//zaPrikazivanjeStoTreba = GetURLParameter('id');
+	//alert(zaPrikazivanjeStoTreba)
+	$("#naseljenoMestoPickup").click(function(){
+		id = $(".highlighted").find(".namj_id").html();
+		$("select").val(id);
+		$('#naseljenoMestoModal').modal('toggle');
+	});
+	
+	$("#bankaPickup").click(function(){
+		id = $(".highlighted").find(".bank_id").html();
+		$("select").val(id);
+		$('#bankaModal').modal('toggle');
+	});
+	$("#nextform1").click(function()
+			{
+				console.log("DOSLO 1");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform1(id);
+			});
+	$("#nextform2").click(function()
+			{
+				console.log("DOSLO 2");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform2(id);
+			});
+});
+
+function sync(item){
+	id = item.find(".id").html()
+	jmbg = item.find(".jmbg").html()
+	ime = item.find(".ime").html()
+	prezime = item.find(".prezime").html()
+	adresa = item.find(".adresa").html()
+	telefon = item.find(".telefon").html()
+	email = item.find(".email").html()
+	pravno = item.find(".pravno").html()
+	bankaVal = item.find(".banka").attr("value");
+	nmVal = item.find(".naseljenoMesto").attr("value");
+
+	 $("#klijent_id").val(id);
+	 $("#klijent_jmbg").val(jmbg);
+	 $("#klijent_ime").val(ime);
+	 $("#klijent_prezime").val(prezime);
+	 $("#klijent_adresa").val(adresa);
+	 $("#klijent_telefon").val(telefon);
+	 $("#klijent_email").val(email);
+	 if(pravno == "true")
+	 	$("#klijent_pravno").prop('checked', true);
+	 else 
+		$("#klijent_pravno").prop('checked', false); //uncheck
+	 
+	 $("#klijent_banka").val(bankaVal);
+	 $("#klijent_naseljenoMesto").val(nmVal);
+	 
+}
+
+function remove(id)
+{
+	var answer = confirm("Are you sure you want to delete?");
+	if(answer)
+		{
+			$(location).attr('href','/Klijenti/delete?id='+id);
+		}
+	else
+		{
+		
+		}
+	
+}
+
+function nextform1(id)
+{
+	$(location).attr('href','/Racuni/nextMehanizam?id='+id+'&sta=kli');
+}
+function nextform2(id)
+{
+	$(location).attr('href','/PravnaLica/nextMehanizam?id='+id+'&sta=kli');
+}
+</script>
+
+
+
+<p>
+<ul>
+  <li><a href="@{Klijenti.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="@{Klijenti.show("edit",null)}" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{Klijenti.show("add",null)}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1">R<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2">PL<img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+
+
+<div class = "container-fluid">
+<h1>Klijenti</h1>
+
+<table class="TabelaForme">
+	<tr class = "header">
+	   <th>JMBG</th> 
+	   <th>Ime</th>
+	   <th>Prezime</th> 
+	   <th>Adresa</th>
+	   <th>Telefon</th> 
+	   <th>Email</th>
+	   <th>Pravno</th> 
+	   <th>Banka</th>
+	   <th>Naseljeno mesto</th> 
+	</tr>
+#{list items:klijenti, as:'klijent'}
+	<tr #{if klijent.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "jmbg">${klijent.jmbg}</td>
+		<td class = "ime">${klijent.ime}</td>
+		<td class = "prezime">${klijent.prezime}</td>
+		<td class = "adresa">${klijent.adresa}</td>
+		<td class = "telefon">${klijent.telefon}</td>
+		<td class = "email">${klijent.email}</td>
+		<td class = "pravno">${klijent.pravno}</td>
+		<td value="${klijent.banka.id}" class = "banka">${klijent.banka.nazivBanke}</td>
+		<td value="${klijent.naseljenoMesto.id}" class = "naseljenoMesto">${klijent.naseljenoMesto.naziv}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${klijent.id}</td>
+	</tr>
+#{/list}
+</table>
+
+<div class = "panel">
+	<p>
+	
+		#{set 'action'}
+		  #{if mode == 'add'}
+		    @{Klijenti.create()}
+		  #{/if}
+		  #{elseif mode == 'edit'}
+		    @{Klijenti.edit()}
+		  #{/elseif}
+		  #{else}
+		    @{Klijenti.filter()}
+		  #{/else}
+		#{/set}
+		
+				#{ifErrors}
+					   <h4>Oops…</h4>
+					   <h6>Greska pri unosu</h6>
+					   <br>
+					#{/ifErrors}
+	
+		<form action=${action} method="post">
+		
+				#{field 'klijent.id'}
+					<input type = "hidden" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				
+				<p>
+				#{field 'klijent.jmbg'}
+					<label for = "${field.id}">JMBG [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.ime'}
+					<label for = "${field.id}">Ime [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.prezime'}
+					<label for = "${field.id}">Prezime [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.adresa'}
+					<label for = "${field.id}">Adresa [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.telefon'}
+					<label for = "${field.id}">Telefon [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.email'}
+					<label for = "${field.id}">Email [filter]</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.pravno'}
+					<label for = "${field.id}">Pravno</label>
+					<input type = "checkbox"  name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				
+			
+				
+				
+				<!-- BANKA -->
+									<p>
+				#{field 'klijent.banka'}
+					<label for = "${field.id}">Banka</label>
+					<select name = "${field.id}" id = "${field.id}"/>
+					#{list items:banke, as:'banka'}
+					<option value = "${banka.id}">${banka.nazivBanke}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#bankaModal">...	</button>
+					 
+					 <script>
+					 	//alert(zaPrikazivanjeStoTreba);
+					 	//document.getElementById('${field.id}').selectedIndex=zaPrikazivanjeStoTreba;
+					 	document.getElementById('${field.id}').selectedIndex=GetURLParameter('id')-1;
+					 </script>
+				#{/}
+				</p>
+				
+				
+					<!-- Naseljeno mjesto -->
+				<p>
+				#{field 'klijent.naseljenoMesto'}
+					<label for = "${field.id}">Naseljeno mesto</label>
+					<select name = "${field.id}" id = "${field.id}"/>
+					#{list items:naseljenaMesta, as:'naseljenoMesto'}
+					<option value = "${naseljenoMesto.id}">${naseljenoMesto.naziv}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#naseljenoMestoModal">...	</button>
+					 
+					 <script>
+					 	//alert(zaPrikazivanjeStoTreba);
+					 	//document.getElementById('${field.id}').selectedIndex=zaPrikazivanjeStoTreba;
+					 	document.getElementById('${field.id}').selectedIndex=GetURLParameter('id')-1;
+					 </script>
+				#{/}
+				</p>
+	
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "#" style="margin-left:1em">Rollback</a>
+				</div>			
+				
+		</form>
+	</p>
+</div>
+
+
+   
+   
+   <!-- MODAL BANKA -->
+  <div class="modal fade" id="bankaModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Banke
+      </div>
+      <div class="modal-body">
+     <table style = "padding:2em">
+		<tr class = "header">
+		 	<th>Naziv</th> 
+	   		<th>Sifra</th>
+	   		<th>SWIFT kod</th>
+	   		<th>Obracunski racun</th>
+		</tr>
+		#{list items:banke, as:'banka'}
+		<tr>
+			<td class = "naziv">${banka.nazivBanke}</td>
+			<td class = "sifra">${banka.sifraBanke}</td>
+			<td class = "swiftKod">${banka.swiftKod}</td>
+			<td class = "obracunskiRacun">${banka.obracunskiRacun}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "bank_id">${banka.id}</td>
+		</tr>
+		#{/list}
+		</table> 
+
+		<div class="modal-footer">
+			<input id = "bankaPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   
+   
+   
+ <!-- Modal naseljeno mjesto-->
+  <div class="modal fade" id="naseljenoMestoModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Naseljena mesta
+      </div>
+      <div class="modal-body">
+	    <table style = "padding:2em">
+		<tr class = "header">
+		 	<th>Oznaka</th> 
+	   		<th>Naziv</th>
+	   		<th width="20%">Postanski broj</th>
+	   		<th>Drzava</th>
+		</tr>
+		#{list items:naseljenaMesta, as:'naseljenoMesto'}
+		<tr>
+			<td class = "oznaka">${naseljenoMesto.oznaka}</td>
+			<td class = "naziv">${naseljenoMesto.naziv}</td>
+			<td class = "postanskiBroj">${naseljenoMesto.postanskiBroj}</td>
+			<td class = "drzava">${naseljenoMesto.drzava.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "namj_id">${naseljenoMesto.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "naseljenoMestoPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   
+
+</div>

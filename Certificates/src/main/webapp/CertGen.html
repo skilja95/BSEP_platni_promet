@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Certificate generator</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/certGen.js"></script>
+<script type="text/javascript" src="js/toastr.min.js"></script>
+<script type="text/javascript" src="js/logout.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/toastr.min.css" rel="stylesheet" />
+</head>
+<body>
+
+	<!-------------------------------- Header ------------------------------------>
+	<nav class="navbar navbar-default navbar-default"
+		style="border-radius: 0px !important; margin-bottom: 0px;">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="CertGen.html">CertGEN</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+
+				<ul class="nav navbar-nav">
+					<li><a id="GenerateKeystore" href="GenerateKeyStore.html">Generate keystore</a></li>
+					<li><a id="GenerateSelfSigned" href="Self-signed.html">Generate self-signed
+							certificates</a></li>
+					<li><a id="CertificateBYCA" href="ByCACertificate.html">Ceritificate by CA</a></li>
+					<li><a id="CertificateForCustomers" href="CertificateCustomers.html">Certificate request</a></li>
+					<li><a id="LoadCSR"
+						href="LoadCSR.html">LoadCSR</a></li>
+					<li><a id="revokeCertificate" href="RevokeCertificate.html">Revoke certificate</a></li>
+					<li><a id="certificateStatus" href="CheckCertificateStatus.html">Check certificate status</a></li>
+
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Settings<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li id="loginButton"><a href="LoginPage.html">Log in</a></li>
+							<li id="logoutButton"><a href="#">Log out</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<!--------------------------------- End Header -------------------------------------------->
+
+	<br>
+	<br>
+	<div class="row">
+		<div class="panel panel-primary filterable">
+			<div class="col-sm-5" style="margin-left: 400px;">
+				<div class="panel panel-default">
+					<div class="panel-body form-horizontal ">
+						<form method="post" class="searchForm">
+
+							<div class="form-group">
+								<label for="concept" class="col-sm-3 control-label">Certificate
+									serial number: </label>
+								<div class="col-sm-4">
+									<div class="col-sm-9">
+										<input type="text" class="form-control" name="searchField"
+											style="width: 330px;">
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="concept" class="col-sm-3 control-label">KeyStore
+									password: </label>
+								<div class="col-sm-4">
+									<div class="col-sm-9">
+										<input type="password" class="form-control" name="password"
+											style="width: 330px;">
+									</div>
+								</div>
+							</div>
+
+
+							<button class="btn btn-primary generate" type="submit">Download
+								certificate</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

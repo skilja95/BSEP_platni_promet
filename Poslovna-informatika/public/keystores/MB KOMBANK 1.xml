@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_121" class="java.beans.XMLDecoder">
+ <object class="model.mbp.MedjubankarskiPrenosi">
+  <void property="bankaPosiljalac">
+   <object class="model.mbp.BankaPosiljalac">
+    <void property="naziv">
+     <string>KOMBANK</string>
+    </void>
+    <void property="obracunskiRacun">
+     <string>4324234234</string>
+    </void>
+    <void property="sifra">
+     <string>21</string>
+    </void>
+    <void property="swiftKod">
+     <string>231</string>
+    </void>
+   </object>
+  </void>
+  <void property="bankaPrimalac">
+   <object class="model.mbp.BankaPrimalac">
+    <void property="naziv">
+     <string>INTESA</string>
+    </void>
+    <void property="obracunskiRacun">
+     <string>4234234</string>
+    </void>
+    <void property="sifra">
+     <string>32</string>
+    </void>
+    <void property="swiftKod">
+     <string>53</string>
+    </void>
+   </object>
+  </void>
+  <void property="detaljiPrenosa">
+   <object class="model.mbp.DetaljiPrenosa">
+    <void property="datum">
+     <string>2017/06/19</string>
+    </void>
+    <void property="iznos">
+     <string>270000</string>
+    </void>
+    <void property="poruka">
+     <string>MT103</string>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

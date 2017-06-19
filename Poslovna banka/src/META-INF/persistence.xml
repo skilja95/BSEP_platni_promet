@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Poslovna banka">
+		<class>models.AnalitikaIzvoda</class>
+		<class>models.Banka</class>
+		<class>models.DnevnoStanjeRacuna</class>
+		<class>models.Drzava</class>
+		<class>models.Klijent</class>
+		<class>models.MedjubankarskiPrenos</class>
+		<class>models.NaseljenoMesto</class>
+		<class>models.PravnoLice</class>
+		<class>models.Racun</class>
+		<class>models.Radnik</class>
+		<class>models.SifarnikDelatnosti</class>
+		<class>models.StavkePrenosa</class>
+		<class>models.Valuta</class>
+		<class>models.ZatvaranjeRacuna</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/poslovna" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="cuko" />
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+		</properties>
+	</persistence-unit>
+
+</persistence>

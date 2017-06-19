@@ -1,0 +1,62 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Application.index
+
+# Home page
+GET     /Drzave                                      Drzave.show
+
+# Home page
+GET     /NaseljenaMesta                                NaseljenaMesta.show
+
+# Home page
+GET     /Klijenti                                      Klijenti.show
+
+# Home page
+GET     /Banke                                      Banke.show
+
+# Home page
+GET     /Racuni                                      Racuni.show
+
+# Home page
+GET     /Valute                                     Valute.show
+
+# Home page
+GET     /PravnaLica                                     PravnaLica.show
+
+# Home page
+GET     /SifarniciDelatnosti                                     SifarniciDelatnosti.show
+
+
+# Home page
+GET     /DnevnaStanjaRacuna                                      DnevnaStanjaRacuna.show
+
+# Home page
+GET     /AnalitikeIzvoda                                      AnalitikeIzvoda.show
+
+# Home page
+GET     /ZatvaranjaRacuna                                      ZatvaranjaRacuna.show
+
+# Home page
+GET     /StavkePrenosa                                      StavkePrenosaa.show
+
+# Home page
+GET     /Logovanje                                      Logovanje.show
+
+# Home page
+GET     /UcitavanjeNalogaZaPrenos                       UcitavanjeNalogaZaPrenos.show
+
+# Home page
+GET     /MedjubankarskiPrenosi                       MedjubankarskiPrenosii.show
+
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

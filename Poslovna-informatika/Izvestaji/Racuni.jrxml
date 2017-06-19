@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-06-04T23:17:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Racuni" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa6b2df7-5d61-47e5-87a9-342e30b4ca8c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Poslovna"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cG9zbG92bmEuYmFua2EgLDM1NCwyNTQsMGM3MTZlZTEtNzkwNC00OTg3LTk1MjItNGMxZjU3YTlj&#xA;NTMxO3Bvc2xvdm5hLmtsaWplbnQgLDE3MSwxNSxmOTQ2NjdhYy1hYzljLTQxMDctODUyYy1iYzkz&#xA;MmU3MjE1MzE7cG9zbG92bmEucmFjdW4gLDE1LDIxNCw4MDM0YjRhNy0wYjlhLTRjMWYtOWFjOC0w&#xA;MDZjMDM0YTg2NDE7"/>
+	<parameter name="ID_Banke" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT poslovna.racun.`brojRacuna`,
+	poslovna.racun.status,
+	poslovna.klijent.ime,
+	poslovna.klijent.prezime,
+	poslovna.banka.`nazivBanke`
+FROM poslovna.racun
+	INNER JOIN poslovna.klijent ON 
+	 poslovna.racun.klijent_id = poslovna.klijent.id 
+	INNER JOIN poslovna.banka ON 
+	 poslovna.klijent.banka_id = poslovna.banka.id 
+	 AND poslovna.racun.banka_id = poslovna.banka.id 
+WHERE 
+	 poslovna.klijent.banka_id = $P{ID_Banke}]]>
+	</queryString>
+	<field name="brojRacuna" class="java.lang.String"/>
+	<field name="status" class="java.lang.Boolean"/>
+	<field name="ime" class="java.lang.String"/>
+	<field name="prezime" class="java.lang.String"/>
+	<field name="nazivBanke" class="java.lang.String"/>
+	<variable name="statusRacuna" class="java.lang.String">
+		<variableExpression><![CDATA[$F{status}.equals( true ) ? "Aktivan" : "Neaktivan"]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="158" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="30" uuid="7940acce-e919-4200-bbab-8f867355fb96"/>
+				<text><![CDATA[Datum:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="40" y="0" width="100" height="30" uuid="a846d99a-f9c8-4038-b327-184e01a4c0f5"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="480" y="0" width="40" height="30" uuid="8cf7a177-d248-4399-957f-8acd2efb9bb9"/>
+				<text><![CDATA[Strana:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="520" y="0" width="40" height="30" uuid="30a35bf8-7324-4843-a4d1-666b2e115bd6"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="180" y="30" width="200" height="39" uuid="ab18e2a2-5114-40bb-b4b4-f2d9f3051089"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Racuni]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="120" height="30" uuid="d55a4c50-df08-4c8d-b206-886b153d4849"/>
+				<text><![CDATA[Ime klijenta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="120" width="130" height="30" uuid="979cc9e9-66c0-4e94-b582-9c5b0f8eaea3"/>
+				<text><![CDATA[Prezime klijenta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="120" width="170" height="30" uuid="552572f4-2fd0-410d-851f-6eb59bd0168b"/>
+				<text><![CDATA[Broj racuna:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="120" width="100" height="30" uuid="e826f14f-7cc4-41ec-8451-8ec74cdb1f92"/>
+				<text><![CDATA[Stanje racuna:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="150" width="595" height="1" uuid="cbbee1a0-3491-4094-a1f0-e0b709524f25">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="180" y="69" width="200" height="30" uuid="ec669b3f-f770-4f7a-85c5-5f1302199f4f"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nazivBanke}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement x="290" y="10" width="170" height="30" uuid="630ebc74-ee8f-4042-880d-d147860934fd"/>
+				<textFieldExpression><![CDATA[$F{brojRacuna}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="10" width="120" height="30" uuid="f638f044-719a-4c96-a9a1-bbbcd2b41393"/>
+				<textFieldExpression><![CDATA[$F{ime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="10" width="130" height="30" uuid="5fce3c70-36cf-4c51-a071-da26fe737700"/>
+				<textFieldExpression><![CDATA[$F{prezime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="10" width="100" height="30" uuid="73f351c6-d3b7-41b9-b68f-86d287084289"/>
+				<textFieldExpression><![CDATA[$V{statusRacuna}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
